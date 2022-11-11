@@ -1,3 +1,9 @@
+//-------------------------------------------------------------------
+// Title       : bit_full_adder.v
+// Author      : Fernando Dominguez Pousa
+// Created     : 11/11/2022
+// Description : Top module for 4-bit multiplicator
+//-------------------------------------------------------------------
 
 `default_nettype none
 
@@ -18,8 +24,10 @@ module asic_multiplier #(parameter MAX_COUNT = 1250) (
 
     // 12 bits to count up to 2500
     reg [11:0] r_counter  ;
-    reg [ 3:0] r_fact_a   ;
-    reg [ 3:0] r_fact_b   ;
+    reg [ 3:0] r_fact_a_in;
+    reg [ 3:0] r_fact_b_in;
+    reg [ 3:0] r_fact_a;
+    reg [ 3:0] r_fact_b;
     reg [ 3:0] r_digit    ;
     reg        r_lsb_digit;
     reg        r_lsb_led  ;
@@ -33,30 +41,29 @@ module asic_multiplier #(parameter MAX_COUNT = 1250) (
             r_lsb_led   <= 0;
             r_fact_a   <= 0;
             r_fact_b   <= 0;
-            r_trigger   <= 0;
 
         end else begin
             // if up to 16e6
             if (r_counter == MAX_COUNT) begin
                 // reset
                 r_counter <= 0;
-                r_trigger <= 1;
 
                 // Create the multiplication factors
-                r_fact_a <= {1'b0, i_factor_a};
-                r_fact_b <= {1'b0, i_factor_b};
+                r_fact_a <= r_fact_a_in;
+                r_fact_b <= r_fact_b_in;
 
                 // toggle between msb and lsb r_digit
                 r_lsb_digit <= ~r_lsb_digit;
 
             end else begin
+                // Register the last input before multiplication time arrive
+                // In this way we assure two digits of the product will be showed
+                r_fact_a_in <= {1'b0, i_factor_a};
+                r_fact_b_in <= {1'b0, i_factor_b};
                 // increment r_counter
                 r_counter <= r_counter + 1'b1;
                 // register the product and lsb led
                 r_lsb_led <= r_lsb_digit;
-
-                // To remove
-                r_trigger <= 0; 
 
                 if (r_lsb_digit == 1)
                     r_digit <= product[3:0];
@@ -94,8 +101,9 @@ module asic_multiplier #(parameter MAX_COUNT = 1250) (
         $dumpvars (6, product);
         $dumpvars (7, r_digit);
         $dumpvars (8, r_counter);
-        $dumpvars (9, r_trigger);
-        $dumpvars (10, r_lsb_digit);
+        $dumpvars (9, r_fact_a);
+        $dumpvars (10, r_fact_b);
+        $dumpvars (11, r_lsb_digit);
         #1;
     end
     `endif
