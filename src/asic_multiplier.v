@@ -16,7 +16,7 @@ module asic_multiplier #(parameter MAX_COUNT = 1250) (
     output       o_lsb_digit
 );
 
-    integer product   ;
+    wire [7:0] product   ;
     wire [6:0] seven_segs;
 
     assign o_segments  = seven_segs;
