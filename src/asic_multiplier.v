@@ -1,11 +1,9 @@
 //-------------------------------------------------------------------
-// Title       : bit_full_adder.v
+// Title       : asic_multiplier.v
 // Author      : Fernando Dominguez Pousa
 // Created     : 11/11/2022
 // Description : Top module for 4-bit multiplicator
 //-------------------------------------------------------------------
-
-`default_nettype none
 
 module asic_multiplier #(parameter MAX_COUNT = 1250) (
     input        clk        , // external clock is 2500Hz
