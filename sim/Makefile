@@ -5,7 +5,7 @@ TESTS += multiplier
 TESTS += asic_multiplier
 TESTS += asic_multiplier_wrapper
 else
-TESTS += gate_level_sim
+TESTS += gate_level
 endif
 
 .PHONY: $(TESTS)

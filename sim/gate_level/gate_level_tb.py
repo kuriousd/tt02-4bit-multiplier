@@ -31,8 +31,8 @@ async def asic_multiplier_test(dut):
 
   for i in range(8):
     for j in range(8):
-        a = i
-        b = j
+        a = 2
+        b = 1
 
 
         dut.i_factor_a.value = a

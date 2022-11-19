@@ -34,7 +34,7 @@ jobs:
         cocotb-config --python-bin
     - name: test
       run: |
-        cd src
+        cd sim
         GATES=yes make
         # make will return success even if the test fails, so check for failure in the results.xml
         ! grep failure results.xml
