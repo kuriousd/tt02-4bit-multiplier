@@ -21,7 +21,7 @@ module asic_multiplier #(parameter MAX_COUNT = 1250) (
     assign o_lsb_digit = r_lsb_led;
 
     // 11 bits to count up to 1250
-    integer r_counter  ;
+    reg [10:0] r_counter  ;
     reg [ 3:0] r_fact_a_in;
     reg [ 3:0] r_fact_b_in;
     reg [ 3:0] r_fact_a;
