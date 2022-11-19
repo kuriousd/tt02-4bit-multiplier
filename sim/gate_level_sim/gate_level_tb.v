@@ -5,6 +5,9 @@
 // Description : Wrapper to fulfill TT02 interface requirements
 //-------------------------------------------------------------------
 
+`default_nettype none
+`timescale 1ns/1ps
+
 module gate_level_tb (
     input        clk        ,
     input        reset      ,
