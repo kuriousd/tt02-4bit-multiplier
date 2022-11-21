@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import cocotb
-from cocotb.triggers import Timer
+from cocotb.triggers import Timer, ClockCycles
 
 import asic_multiplier_models
 
@@ -38,14 +38,14 @@ async def asic_multiplier_test(dut):
       dut.i_factor_a.value = a
       dut.i_factor_b.value = b
 
-      await Timer(501, units="ms")
+      await ClockCycles(dut.clk, 1253)
 
       mult = a * b
       segment_lsb = asic_multiplier_models.seven_segs_to_number(dut.o_segments.value)
 
       assert (dut.o_lsb_digit == 1), "LED showing LSB nibble is not HIGH"
 
-      await Timer(500, units="ms")
+      await ClockCycles(dut.clk, 1253)
 
       segment_msb = asic_multiplier_models.seven_segs_to_number(dut.o_segments.value)
       seg_result = asic_multiplier_models.digits_to_number(segment_msb, segment_lsb)
